@@ -1,0 +1,14 @@
+{
+  "SessionStart": [
+    {
+      "matcher": ".*",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "mkdir -p logs && echo '[rn-deploy-toolkit] logs/ directory ready'",
+          "timeout": 5
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "rn-deploy-toolkit",
+  "version": "0.1.0",
+  "description": "Deploy, debug, and store-submit React Native Expo apps with coordinated agent teams. Orchestrates device testing, build fixing, performance auditing, and store readiness QA — all with TDD enforcement and structured logging.",
+  "author": {
+    "name": "linus",
+    "url": "https://github.com/linus"
+  },
+  "license": "MIT",
+  "keywords": [
+    "react-native",
+    "expo",
+    "deploy",
+    "debug",
+    "device-testing",
+    "eas",
+    "tdd",
+    "mobile",
+    "agent-team"
+  ]
+}
