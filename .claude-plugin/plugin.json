@@ -4,12 +4,12 @@
   "description": "Deploy, debug, and store-submit React Native Expo apps with coordinated agent teams. Orchestrates device testing, build fixing, performance auditing, and store readiness QA — all with TDD enforcement and structured logging.",
   "author": {
     "name": "linus",
-    "url": "https://github.com/linus"
+    "url": "https://github.com/linusamcm-source/rn-deploy-toolkit"
   },
-  "homepage": "https://github.com/linus/rn-deploy-toolkit",
+  "homepage": "https://github.com/linusamcm-source/rn-deploy-toolkit",
   "repository": {
     "type": "git",
-    "url": "https://github.com/linus/rn-deploy-toolkit.git"
+    "url": "https://github.com/linusamcm-source/rn-deploy-toolkit"
   },
   "license": "MIT",
   "keywords": [
