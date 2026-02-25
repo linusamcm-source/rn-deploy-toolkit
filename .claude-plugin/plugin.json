@@ -6,6 +6,11 @@
     "name": "linus",
     "url": "https://github.com/linus"
   },
+  "homepage": "https://github.com/linus/rn-deploy-toolkit",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/linus/rn-deploy-toolkit.git"
+  },
   "license": "MIT",
   "keywords": [
     "react-native",

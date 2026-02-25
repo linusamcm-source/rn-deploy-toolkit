@@ -1,0 +1,13 @@
+{
+  "name": "rn-deploy-toolkit-marketplace",
+  "description": "Marketplace for the rn-deploy-toolkit Claude Code plugin",
+  "plugins": [
+    {
+      "name": "rn-deploy-toolkit",
+      "version": "0.1.0",
+      "description": "Deploy, debug, and store-submit React Native Expo apps with coordinated agent teams. Orchestrates device testing, build fixing, performance auditing, and store readiness QA — all with TDD enforcement and structured logging.",
+      "source": ".",
+      "homepage": "https://github.com/linus/rn-deploy-toolkit"
+    }
+  ]
+}

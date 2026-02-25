@@ -6,22 +6,103 @@ Deploy, debug, and store-submit React Native Expo apps with coordinated agent te
 
 Orchestrates a team of specialized Claude Code agents to build, test, deploy, and debug React Native Expo applications. Supports local dev builds, EAS cloud builds, store submissions, OTA updates, and live device debugging — all through shared task state with TDD enforcement and structured logging.
 
-## Requirements
-
-- Claude Code with Agent Teams enabled (`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`)
-- React Native Expo project
-- MCP servers: `react-native-expo`, `mobile-mcp`, `react-native-debugger-mcp`
-- Android emulator or iOS simulator (for device testing)
-
 ## Installation
 
-```bash
-# From Claude Code plugin marketplace
-claude plugin install rn-deploy-toolkit
+### From the marketplace
 
-# Or local development
+Add the marketplace to Claude Code:
+
+```
+/plugin marketplace add linus/rn-deploy-toolkit
+```
+
+Then install the plugin:
+
+```
+/plugin install rn-deploy-toolkit@rn-deploy-toolkit-marketplace
+```
+
+### From GitHub (direct)
+
+```
+/plugin install github:linus/rn-deploy-toolkit
+```
+
+### Local development
+
+```bash
 claude --plugin-dir /path/to/rn-deploy-toolkit
 ```
+
+## Prerequisites
+
+### Claude Code Agent Teams
+
+Agent teams must be enabled for the `team-deploy` command to work. Add this to your Claude Code `settings.json`:
+
+```json
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  }
+}
+```
+
+You can find your settings file at `~/.claude/settings.json` (global) or `.claude/settings.json` (project-level).
+
+### MCP Servers
+
+This plugin requires several MCP servers for build, device, and debug operations. Install and configure each one in your project's `.mcp.json` or Claude Code settings.
+
+| MCP Server | Purpose | Required |
+|------------|---------|----------|
+| `react-native-expo` | Build, deploy, diagnostics, EAS operations | Yes |
+| `mobile-mcp` | Device automation, screenshots, smoke testing | Yes |
+| `react-native-debugger-mcp` | Console log inspection from running apps | Yes |
+| `react-native-guide` | Performance analysis and best practices | No (optional) |
+
+Refer to each MCP server's own documentation for installation instructions. Once installed, register them in your project's `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "react-native-expo": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/react-native-expo-mcp"]
+    },
+    "mobile-mcp": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mobile-mcp"]
+    },
+    "react-native-debugger-mcp": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/react-native-debugger-mcp"]
+    }
+  }
+}
+```
+
+> **Note:** The exact package names and arguments above are illustrative. Check each server's documentation for the correct installation command.
+
+### Platform Tooling
+
+**For Android:**
+- Android SDK installed and configured
+- An Android emulator running, or a physical device connected via `adb`
+- Verify with: `adb devices`
+
+**For iOS:**
+- Xcode installed with iOS Simulator
+- A simulator booted, or a physical device registered
+
+**For release/store submission:**
+- EAS CLI installed: `npm install -g eas-cli`
+- Authenticated with Expo: `npx expo login`
+- EAS project configured: `eas init`
+
+### React Native Expo Project
+
+The plugin expects to be used within an existing React Native Expo project. It does not scaffold new projects.
 
 ## Commands
 
@@ -90,23 +171,29 @@ logs/error.log  (shared)
 
 Format: `[YYYY-MM-DDTHH:mm:ss] [AGENT-NAME] [LEVEL] message`
 
-## Setup
+### Log Monitoring
 
-Enable agent teams in your Claude Code settings:
+```bash
+# Scan for errors and warnings
+bash scripts/monitor-logs.sh
 
-```json
-{
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
-  }
-}
+# Verify TDD compliance
+bash scripts/verify-tdd.sh
 ```
 
-Ensure your project has the required MCP servers configured:
-- `react-native-expo` — Build, deploy, diagnostics
-- `mobile-mcp` — Device automation and screenshots
-- `react-native-debugger-mcp` — Console log inspection
-- `react-native-guide` — Performance analysis and best practices (optional)
+## Configuration
+
+| Setting | Default | Description |
+|---------|---------|-------------|
+| Core teammates | 2 (dev/debug), 5 (release) | Based on mode |
+| Max teammates | 6 | Including on-demand engineer |
+| Max debug iterations | 3 | Before escalating to user |
+| Metro port | 8081 | Default port for dev server |
+| Platform | android | Default build platform |
+
+## Contributing
+
+Contributions are welcome. Please open an issue or pull request on the [GitHub repository](https://github.com/linus/rn-deploy-toolkit).
 
 ## License
 
